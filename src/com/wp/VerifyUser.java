@@ -1,16 +1,20 @@
 package com.wp;
 
 import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/VerifyUser")
 public class VerifyUser extends HttpServlet {
@@ -38,7 +42,25 @@ public class VerifyUser extends HttpServlet {
 				ps.setString(2,password);
 				ResultSet rs=ps.executeQuery();
 				if(rs.next()){
-					response.sendRedirect("BuyerPage.jsp");
+					HttpSession session=request.getSession();
+					//step-2 (write the data in session)
+					session.setAttribute("user", userid);
+					String choice=request.getParameter("save");
+					if(choice!=null){
+						
+						Cookie c1=new Cookie("id",userid);
+						Cookie c2=new Cookie("pw", password);
+						
+						c1.setMaxAge(60*60*24*7);
+						c2.setMaxAge(60*60*24*7);
+						
+						response.addCookie(c1);
+						response.addCookie(c2);	
+					}
+					RequestDispatcher rd=request.getRequestDispatcher("BuyerPage.jsp");
+					rd.forward(request, response);
+					System.out.println("Send");
+					
 				}else{
 					out.println("INVALID BUYER CREDENTIALS");
 				}

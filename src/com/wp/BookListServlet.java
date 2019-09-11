@@ -22,10 +22,7 @@ public class BookListServlet extends HttpServlet {
 		String subject=request.getParameter("subject");
 		PrintWriter out=response.getWriter();
 		Cookie c3 = new Cookie("visit", subject);
-		System.out.println(subject);
-		c3.setValue(subject);
-		c3.setMaxAge(60 * 60 * 24 * 7);
-		response.addCookie(c3);
+		response.addCookie(c3);System.out.println(subject);
 		try{
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/demo","root","root");
@@ -49,11 +46,7 @@ public class BookListServlet extends HttpServlet {
 		out.println("<a href=SubjectPageServlet>Subject-Page</a>");
 		out.println("<a href=BuyerPage.jsp>Buyer-Page</a>");
 		out.println("</body></html>");
-		
-		
-		
-		
-		}catch(Exception e){
+	}catch(Exception e){
 			out.println(e);
 		}
 	}

@@ -59,7 +59,6 @@ public class VerifyUser extends HttpServlet {
 					}
 					RequestDispatcher rd=request.getRequestDispatcher("BuyerPage.jsp");
 					rd.forward(request, response);
-					System.out.println("Send");
 					
 				}else{
 					out.println("INVALID BUYER CREDENTIALS");

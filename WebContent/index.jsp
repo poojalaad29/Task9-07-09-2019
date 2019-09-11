@@ -25,7 +25,7 @@
 		Password	<input type="password" name="password" value="<%=s2%>"/>
 		Usertype	owner	<input type="radio" name="utype" value="owner"/>
 				buyer 	<input type="radio" name="utype" value="buyer" checked="checked"/>
-				<input type="checkbox" name="save" required>Remember Me....
+				<input type="checkbox" name="save" >Remember Me....
 					<input type="submit" value="Login"/>
 	</pre>
 	</form>

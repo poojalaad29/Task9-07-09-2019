@@ -21,18 +21,15 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 		String val="";int val1=0;
 		String title=request.getParameter("title");
 		PrintWriter out=response.getWriter();
-		Cookie ck[] = request.getCookies();
+		/*Cookie ck[] = request.getCookies();
 		for (int i = 0; i < ck.length; i++) {
 			if (ck[i].getName().equals(title))
 			 val1 = Integer.parseInt(ck[i].getValue());
 			  val1=val1+1;
 			if(val1<5)
 				increaseprice();
-		}
-		Cookie c3 = new Cookie(title,val);
-	//	c3.setValue(count);
-		c3.setMaxAge(60 * 60 * 24 * 7);
-		response.addCookie(c3);
+		}*/
+		
 		try{
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/demo","root","root");
@@ -78,11 +75,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 		out.println("<a href=SubjectPageServlet>Subject-Page</a><br>");
 		out.println("<a href=BuyerPage.jsp>Buyer-Page</a><br>");
 		out.println("</body></html>");
-		
-		
-		
-		
-		}catch(Exception e){
+	}catch(Exception e){
 			out.println(e);
 		}
 	}

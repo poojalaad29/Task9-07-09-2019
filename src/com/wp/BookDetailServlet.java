@@ -17,36 +17,34 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/BookDetailServlet")
 public class BookDetailServlet extends HttpServlet {
 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String code=request.getParameter("code");
+		
+	   String code=request.getParameter("code");
 		String val="";int val1=0;
 		String title=request.getParameter("title");
 		PrintWriter out=response.getWriter();
-		/*Cookie ck[] = request.getCookies();
-		for (int i = 0; i < ck.length; i++) {
-			if (ck[i].getName().equals(title))
-			 val1 = Integer.parseInt(ck[i].getValue());
-			  val1=val1+1;
-			if(val1<5)
-				increaseprice();
-		}*/
 		
-		try{
+	try{
+		
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/demo","root","root");
+		
 		String sql="SELECT * from books where id=?";
 		PreparedStatement ps=con.prepareStatement(sql);
 		ps.setInt(1, Integer.parseInt(code));
 		ResultSet rs=ps.executeQuery();
+		
 		out.println("<html>");
 		out.println("<html><body>");
 		out.println("<h3>Book-Details</h3>");
 		out.println("<hr>");
+		
 		while(rs.next()){
 			String bcode=rs.getString(1);
 			 title=rs.getString(2);
 			String price=rs.getString(3);
 			String author=rs.getString(4);
 			String subject=rs.getString(5);
+			
 			out.println("<table border=2>");
 			out.println("<tr>");
 			out.println("<td>BCode</td>");
@@ -69,19 +67,17 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 			out.println("<td>"+price+"</td>");
 			out.println("</tr>");
 			out.println("</table>");
+		
 		}
+		
 		out.println("<hr>");
 		out.println("<a href=CartManager?code="+code+">Add-To-Cart</a><br>");
 		out.println("<a href=SubjectPageServlet>Subject-Page</a><br>");
 		out.println("<a href=BuyerPage.jsp>Buyer-Page</a><br>");
 		out.println("</body></html>");
+	
 	}catch(Exception e){
 			out.println(e);
 		}
 	}
-
-private void increaseprice() {
-	// TODO Auto-generated method stub
-	
-}
 }
